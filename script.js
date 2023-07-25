@@ -15,8 +15,6 @@
     const pages = Math.ceil($items.length / itemsPerPage);
 
 
-
-
     let dotsFragment = $(document.createDocumentFragment());
 
     let scrollCoordinate;
@@ -27,18 +25,32 @@
 
     $dotsNavigation.append(dotsFragment);
 
+    currentDot();
+
     $('.carousel__dot').on('click', function () {
         const $this = $(this);
-        $('.carousel__dot--current').removeClass('carousel__dot--current')
-        $(this).addClass('carousel__dot--current');
 
         const pageIndex = $this.index();
 
         $container.animate({
             scrollLeft: containerWidth * pageIndex + gap * pageIndex
-        }, 500);
+        }, 500, currentDot);
+
+        currentDot();
 
     });
+
+    function currentDot() {
+        const estimatedPage = Math.round($container.scrollLeft() / (containerWidth + gap))
+        const normalizedPage = Math.min(Math.max(estimatedPage, 0), pages);
+        const $targetDot = $dotsNavigation.find('.carousel__dot:nth-child(' + (normalizedPage + 1) + ')');
+        if( !$targetDot.hasClass('carousel__dot--current') ) {
+            $('.carousel__dot--current').removeClass('carousel__dot--current');
+            $targetDot.addClass('carousel__dot--current');
+        }
+    }
+
+    $container.on('scroll', currentDot);
 
 })(jQuery);
 

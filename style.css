@@ -1,0 +1,39 @@
+:root {
+    --carousel-items-per-page: 5;
+}
+
+body {
+    margin: 0;
+}
+
+.carousel {
+
+}
+    .carousel__container {
+        display: flex;
+        align-items: stretch;
+        gap: 20px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+        .carousel__item {
+            flex-shrink: 0;
+            width: calc((100% - 20px * calc(var(--carousel-items-per-page) - 1)) / var(--carousel-items-per-page));
+        }
+
+    .carousel__dots-navigation {
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+        .carousel__dot {
+            padding: 10px 14px;
+            cursor: pointer;
+        }
+
+        .carousel__dot--current {
+            font-weight: bold;
+            cursor: default;
+        }
